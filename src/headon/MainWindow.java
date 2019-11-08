@@ -22,7 +22,6 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
      * Creates new form MainWindow
      */
     ArrayList<String> publicMsgList = new ArrayList<>();
-    private AddingMessage addingmessage;
     FriendList friendListan = new FriendList();
     AddFriendForm theForm = new AddFriendForm();
     MessageList messageListan = new MessageList();
@@ -49,10 +48,6 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         
     }
     
-    public void setListener(AddingMessage addingMessage)
-    {
-        this.addingmessage = addingMessage;
-    }
     public FriendList getModel()
     {
         return new FriendList();
@@ -189,26 +184,23 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1)
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(26, 26, 26))))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(43, 43, 43))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
@@ -247,7 +239,6 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         // TODO add your handling code here:
         if(publicChatCheckBox.isSelected()){
             privateChatCheckBox.setSelected(false);
-            System.out.println("PublicChecked");
             messageListan.MsgList = publicMsgList;
             refreshMsgList();
         }
@@ -270,18 +261,18 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
     public void refreshList()
     {
         DefaultListModel dlm = new DefaultListModel();
-        for(Friends user: this.friendListan.friendList){
+        this.friendListan.friendList.forEach((Friends user) -> {
             dlm.addElement(user);
-        }
+        });
         listOfFriends.setModel(dlm);
     }
     
     public void refreshMsgList()
     {
         DefaultListModel dlm = new DefaultListModel();
-        for(String msg: this.messageListan.MsgList){
+        this.messageListan.MsgList.forEach((msg) -> {
             dlm.addElement(msg);
-        }
+        });
         
         chatMessage.setModel(dlm);
     }
@@ -344,10 +335,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         //</editor-fold>
         
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainWindow().setVisible(true);
         });
     }
 
