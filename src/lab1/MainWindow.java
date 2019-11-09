@@ -8,7 +8,6 @@ package lab1;
 import lab1.listeners.AddingMessage;
 import lab1.listeners.AddingUser;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -35,7 +34,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         theForm.setListener(this);
         privateChatCheckBox.setSelected(false);
         messageListan.MsgList = publicMsgList;
-        refreshList();
+        
+        
         
     }
     
@@ -70,7 +70,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         publicChatCheckBox = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Mitt Fönster");
+        setTitle("ChattWindow");
+        setResizable(false);
 
         jScrollPane1.setViewportView(chatMessage);
 
@@ -163,33 +164,26 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
+                        .addGap(53, 53, 53)
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(113, 113, 113))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
-                                .addGap(49, 49, 49))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(messageText, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sendButton)
-                                .addGap(4, 4, 4)))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(addButton)
-                        .addGap(0, 38, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(messageText, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sendButton)))
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addButton))
+                        .addGap(101, 101, 101))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +198,9 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,19 +240,6 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         }
         
     }//GEN-LAST:event_publicChatCheckBoxActionPerformed
-
-    private void listOfFriendsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listOfFriendsMouseClicked
-        JList list = (JList)evt.getSource();
-        if(privateChatCheckBox.isSelected())
-        {
-            int index = list.locationToIndex(evt.getPoint());
-            messageListan.MsgList = friendListan.friendList.get(index).messagesToUser;
-            refreshMsgList();
-            
-        }
-        
-        refreshMsgList();
-    }//GEN-LAST:event_listOfFriendsMouseClicked
     public void refreshList()
     {
         int widthSize = 4;
@@ -274,8 +257,10 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         }
             System.out.println(widthSize);
         
-        jScrollPane2.setSize(widthSize*10, 167);
-        listOfFriends.setSize(widthSize*10, 167);
+            
+        this.setExtendedState(this.getExtendedState());
+        jScrollPane2.setSize(widthSize*8, friendListan.getSize()*20);
+        
         
     }
     
@@ -315,6 +300,19 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         // TODO add your handling code here:
         
     }//GEN-LAST:event_messageTextActionPerformed
+
+    private void listOfFriendsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listOfFriendsMouseClicked
+        JList list = (JList)evt.getSource();
+        if(privateChatCheckBox.isSelected())
+        {
+            int index = list.locationToIndex(evt.getPoint());
+            messageListan.MsgList = friendListan.friendList.get(index).messagesToUser;
+            refreshMsgList();
+
+        }
+
+        refreshMsgList();
+    }//GEN-LAST:event_listOfFriendsMouseClicked
 
     /**
      * @param args the command line arguments
