@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package headon;
+package lab1;
 
-import headon.listeners.AddingUser;
+import lab1.listeners.AddingUser;
 
 /**
  *
@@ -15,7 +15,6 @@ public class AddFriendForm extends javax.swing.JFrame {
     /**
      * Creates new form ChatInputForm
      */
-    
     private AddingUser addingUser;
     
     public AddFriendForm() {
@@ -68,20 +67,18 @@ public class AddFriendForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(203, 292, Short.MAX_VALUE)))))
-                .addContainerGap())
+                        .addComponent(addFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(298, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addButton)
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +87,9 @@ public class AddFriendForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addFriendInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addComponent(addButton)
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -103,11 +100,15 @@ public class AddFriendForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addFriendInputActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-
-        this.setVisible(false);
-        this.addingUser.onAddingUser(addFriendInput.getText());
-        this.addFriendInput.setText(null);
-
+        if (addFriendInput.getText().isEmpty())
+        {
+            jLabel1.setText("Friend name: Please enter a name");
+        }
+        else{        
+            this.setVisible(false);
+            this.addingUser.onAddingUser(addFriendInput.getText());
+            this.addFriendInput.setText(null);
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
     /**

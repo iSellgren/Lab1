@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package headon;
+package lab1;
 import java.util.ArrayList;
 import java.util.Iterator;
 /**
