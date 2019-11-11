@@ -5,11 +5,16 @@
  */
 package lab1;
 
+import java.io.IOException;
 import lab1.listeners.AddingMessage;
 import lab1.listeners.AddingUser;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -292,9 +297,25 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         //this.addingmessage.onAddingMessage("Test",messageText.getText());
-        this.messageListan.addMessage(messageText.getText());
-        refreshMsgList();
-        this.messageText.setText(null);
+        if(messageText.getText().contentEquals("/temp"))
+        {
+            try {
+                this.messageListan.addMessage(Temperature.temperature());
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SAXException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            refreshMsgList();
+        
+        }
+        else{
+            this.messageListan.addMessage(messageText.getText());
+            refreshMsgList();
+            this.messageText.setText(null);
+        }
         
     }//GEN-LAST:event_sendButtonActionPerformed
 
