@@ -33,6 +33,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         initComponents();
         theForm.setListener(this);
         privateChatCheckBox.setSelected(false);
+        listOfFriends.setEnabled(false);
         messageListan.MsgList = publicMsgList;
         
         
@@ -71,7 +72,6 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ChattWindow");
-        setResizable(false);
 
         jScrollPane1.setViewportView(chatMessage);
 
@@ -176,13 +176,13 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(messageText, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(messageText)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(sendButton)))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addButton))
+                            .addComponent(addButton)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(101, 101, 101))))
         );
         layout.setVerticalGroup(
@@ -197,10 +197,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(messageText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +223,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         // TODO add your handling code here:
         if(privateChatCheckBox.isSelected()){
             publicChatCheckBox.setSelected(false);
-            System.out.println("PrivateChecked");
+            listOfFriends.setEnabled(true);
+            jLabel2.setText("Chat history : "+ "Private Select User");
         }
         refreshMsgList();
         
@@ -233,8 +232,12 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
 
     private void publicChatCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicChatCheckBoxActionPerformed
         // TODO add your handling code here:
+        publicChatCheckBox.setSelected(true);
         if(publicChatCheckBox.isSelected()){
             privateChatCheckBox.setSelected(false);
+            listOfFriends.setEnabled(false);
+            listOfFriends.clearSelection();
+            jLabel2.setText("Chat history : "+ "Public");
             messageListan.MsgList = publicMsgList;
             refreshMsgList();
         }
@@ -257,9 +260,8 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         }
             System.out.println(widthSize);
         
-            
         this.setExtendedState(this.getExtendedState());
-        jScrollPane2.setSize(widthSize*8, friendListan.getSize()*20);
+        jScrollPane2.setSize(widthSize*9, jScrollPane1.getSize().height);
         
         
     }
@@ -306,8 +308,10 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         if(privateChatCheckBox.isSelected())
         {
             int index = list.locationToIndex(evt.getPoint());
+            jLabel2.setText("Chat history : "+ friendListan.friendList.get(index).getName());
             messageListan.MsgList = friendListan.friendList.get(index).messagesToUser;
             refreshMsgList();
+            
 
         }
 
