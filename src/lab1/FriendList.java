@@ -41,9 +41,5 @@ public class FriendList extends AbstractListModel<String> {
     {
         this.friendList.add(user);
     }
-    public void printMsg(String text)
-    {
-        //this.
-    }
     
 }

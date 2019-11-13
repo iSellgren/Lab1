@@ -98,7 +98,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         jScrollPane2.setViewportView(listOfFriends);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jLabel2.setText("Chat history");
+        jLabel2.setText("Chat history : Public");
 
         addButton.setText("Add Friend");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -172,12 +172,11 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(113, 113, 113))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -193,13 +192,10 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1)))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -231,8 +227,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
             listOfFriends.setEnabled(true);
             jLabel2.setText("Chat history : "+ "Private Select User");
         }
-        refreshMsgList();
-        
+        refreshMsgList();      
     }//GEN-LAST:event_privateChatCheckBoxActionPerformed
 
     private void publicChatCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicChatCheckBoxActionPerformed
@@ -262,13 +257,9 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
             int temp = friendListan.friendList.get(i).getName().length();
             if(widthSize < temp)
                 widthSize = temp;
-        }
-            System.out.println(widthSize);
-        
+        }        
         this.setExtendedState(this.getExtendedState());
-        jScrollPane2.setSize(widthSize*9, jScrollPane1.getSize().height);
-        
-        
+        jScrollPane2.setSize(widthSize*9, jScrollPane1.getSize().height);  
     }
     
     public void refreshMsgList()
@@ -297,17 +288,16 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         //this.addingmessage.onAddingMessage("Test",messageText.getText());
-        if(messageText.getText().contentEquals("/temp"))
+        if(messageText.getText().contains("/temp"))
         {
-            try {
-                this.messageListan.addMessage(Temperature.temperature());
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           String cords = messageText.getText();
+          
+           String place = cords.substring(6, cords.length());
+           
+           String longitude = Coordinates.getLongitude(place);
+           String latitude = Coordinates.getLatitude(place);
+           
+            this.messageListan.addMessage(Temperature.temperature(latitude,longitude));
             refreshMsgList();
         
         }

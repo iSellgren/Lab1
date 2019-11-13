@@ -27,21 +27,30 @@ import org.xml.sax.SAXException;
  *
  * @author fredriksellgren
  */
-public class Temperature {
+public class Coordinates {
+
     
+
     
-    static String temperature(String lat, String lon){
-        
+    static String getLatitude(String city){
+        String cordinate = longlatiCords(city)[0];
+        return cordinate;
+    }
+        static String getLongitude(String city){
+        String cordinate = longlatiCords(city)[1];
+        return cordinate;
+    }
+
+
+   private static String[] longlatiCords(String city){
         HttpsURLConnection myConnection = null;
-        String temps = null;
-        String units = null;
-        
+        String latitudeCoordinate = null;
+        String longitudeCordinate = null;
         try {
-            URL url = new URL("https://api.met.no/weatherapi/locationforecast/1.9/?lat="+lat+"&lon="+lon);
+            URL url = new URL("https://nominatim.openstreetmap.org/search?format=xml&q="+city);
             myConnection = (HttpsURLConnection) url.openConnection();
             myConnection.setRequestMethod("GET");
             int checkResponseCode = myConnection.getResponseCode();
-
             if(checkResponseCode == HttpURLConnection.HTTP_OK){
                 StringBuffer response;
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream()))) {
@@ -49,7 +58,7 @@ public class Temperature {
                     response = new StringBuffer();
                     while ((inputLine = in.readLine()) != null){
                         
-                        response.append(inputLine);   
+                        response.append(inputLine);     
                     }
                 }
 
@@ -60,11 +69,12 @@ public class Temperature {
                     builder = factory.newDocumentBuilder();
                     is = new InputSource(new StringReader(response.toString()));
                     Document doc = builder.parse(is);       
-                    NodeList list = doc.getElementsByTagName("temperature");
+                    NodeList list = doc.getElementsByTagName("place");
                     Node node = list.item(0);
+                    
                     NamedNodeMap nodeMap = node.getAttributes();
-                    temps = nodeMap.getNamedItem("value").getFirstChild().getTextContent();
-                    units = nodeMap.getNamedItem("unit").getFirstChild().getTextContent();
+                    latitudeCoordinate = nodeMap.getNamedItem("lat").getFirstChild().getTextContent();
+                    longitudeCordinate = nodeMap.getNamedItem("lon").getFirstChild().getTextContent();
                     
                 } catch(SAXException e){
                     System.err.println("SAXException: " + e);
@@ -81,7 +91,7 @@ public class Temperature {
         } catch(IOException e){
             
             System.err.println("IOException: " + e);
-            return "Unable to connect api.met.no";
+            //return "Unable to connect api.met.no";
         } finally {
             if(myConnection != null)
             {
@@ -89,7 +99,6 @@ public class Temperature {
             }
             
         }
-        
-        return temps+ " "+units;
+        return new String[] { latitudeCoordinate, longitudeCordinate };
     }
 }
