@@ -29,9 +29,6 @@ import org.xml.sax.SAXException;
  */
 public class Coordinates {
 
-    
-
-    
     static String getLatitude(String city){
         String cordinate = longlatiCords(city)[0];
         return cordinate;

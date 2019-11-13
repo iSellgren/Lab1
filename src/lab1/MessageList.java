@@ -19,12 +19,12 @@ public class MessageList extends AbstractListModel<String>{
     {}
     @Override
     public int getSize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return MsgList.size();
     }
 
     @Override
     public String getElementAt(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return MsgList.get(index);
     }
     
     public void addMessage(String msg)

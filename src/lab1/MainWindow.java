@@ -4,17 +4,11 @@
  * and open the template in the editor.
  */
 package lab1;
-
-import java.io.IOException;
 import lab1.listeners.AddingMessage;
 import lab1.listeners.AddingUser;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -296,8 +290,10 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
            
            String longitude = Coordinates.getLongitude(place);
            String latitude = Coordinates.getLatitude(place);
+           System.setProperty("http.agent", "Gluon Mobile/1.0.3");
+           //MapForTown.getMapWindow();
            
-            this.messageListan.addMessage(Temperature.temperature(latitude,longitude));
+            this.messageListan.addMessage("Temperature in "+ place + " is "+Temperature.temperature(latitude,longitude));
             refreshMsgList();
         
         }
