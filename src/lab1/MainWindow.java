@@ -70,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         publicChatCheckBox = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ChattWindow");
+        setTitle("ChatWindow");
 
         jScrollPane1.setViewportView(chatMessage);
 
@@ -290,13 +290,24 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
            
            String longitude = Coordinates.getLongitude(place);
            String latitude = Coordinates.getLatitude(place);
-           System.setProperty("http.agent", "Gluon Mobile/1.0.3");
-           //MapForTown.getMapWindow();
            
             this.messageListan.addMessage("Temperature in "+ place + " is "+Temperature.temperature(latitude,longitude));
             refreshMsgList();
         
         }
+        
+        else if(messageText.getText().contains("/map"))
+        {
+           String cords = messageText.getText();
+          
+           String place = cords.substring(5, cords.length());
+           
+           String longitude = Coordinates.getLongitude(place);
+           String latitude = Coordinates.getLatitude(place);
+           MapForTown.getMapWindow(longitude,latitude);
+        
+        }
+        
         else{
             this.messageListan.addMessage(messageText.getText());
             refreshMsgList();
@@ -325,6 +336,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         refreshMsgList();
     }//GEN-LAST:event_listOfFriendsMouseClicked
 
+    
     /**
      * @param args the command line arguments
      */
@@ -352,7 +364,7 @@ public class MainWindow extends javax.swing.JFrame implements AddingUser, Adding
         }
         //</editor-fold>
         //</editor-fold>
-        
+        System.setProperty("http.agent", "Mozilla/5.0");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new MainWindow().setVisible(true);
